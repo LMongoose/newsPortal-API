@@ -38,6 +38,20 @@ class Database:
             }
 
     def insert_post(self, post: dict):
+        assert post["title"] is not None, "Post title is not present."
+        assert type(post["title"]) == str, "Post title accepts only string."
+        assert post["title"] != "", "Post title can not be empty."
+        assert len(post["title"]) <= 255, "Post title size can be less or equal to 255."
+
+        assert post["text"] is not None, "Post text is not present."
+        assert type(post["text"]) == str, "Post text accepts only string."
+        assert post["text"] != "", "Post text can not be empty."
+
+        assert post["author"] is not None, "Post author is not present."
+        assert type(post["author"]) == str, "Post author accepts only string."
+        assert post["author"] != "", "Post author can not be empty."
+        assert len(post["author"]) <= 128, "Post author size can be less or equal to 128."
+
         result = self.db["news"].insert_one(post)
         if(result.inserted_id):
             return {
@@ -51,6 +65,20 @@ class Database:
             }
 
     def update_post(self, title: str, post: dict):
+        assert post["title"] is not None, "Post title is not present."
+        assert type(post["title"]) == str, "Post title accepts only string."
+        assert post["title"] != "", "Post title can not be empty."
+        assert len(post["title"]) <= 255, "Post title size can be less or equal to 255."
+
+        assert post["text"] is not None, "Post text is not present."
+        assert type(post["text"]) == str, "Post text accepts only string."
+        assert post["text"] != "", "Post text can not be empty."
+
+        assert post["author"] is not None, "Post author is not present."
+        assert type(post["author"]) == str, "Post author accepts only string."
+        assert post["author"] != "", "Post author can not be empty."
+        assert len(post["author"]) <= 128, "Post author size can be less or equal to 128."
+
         result = self.db["news"].update_one({"title": title}, { "$set": post})
         if(result.modified_count > 0):
             return {
@@ -107,6 +135,9 @@ class Database:
             }
 
     def insert_author(self, author: dict):
+        assert author["name"] is not None, "Author name is not present."
+        assert type(author["name"]) == str, "Author name accepts only string."
+
         result = self.db["authors"].insert_one(author)
         if(result.inserted_id):
             return {
@@ -120,6 +151,9 @@ class Database:
             }
 
     def update_author(self, name: str, author: dict):
+        assert author["name"] is not None, "Author name is not present."
+        assert type(author["name"]) == str, "Author name accepts only string."
+
         result = self.db["authors"].update_one({"name": name}, { "$set": author})
         if(result.modified_count > 0):
             return {
